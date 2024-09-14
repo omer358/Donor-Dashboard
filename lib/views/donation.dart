@@ -7,6 +7,8 @@ class AddDonationScreen extends StatelessWidget {
   final TextEditingController bloodTypeController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
 
+  AddDonationScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,6 +30,7 @@ class AddDonationScreen extends StatelessWidget {
                 'bloodType': bloodTypeController.text,
                 'location': locationController.text,
                 'createdAt': DateTime.now(),
+                'active': true
               });
             },
             child: Text('Add Donation'),

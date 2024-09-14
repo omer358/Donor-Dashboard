@@ -48,12 +48,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyCPszACnxqDxNasnF9-D33UrmrhsdGqKKE',
-    appId: '1:283704459158:web:0490260cdb68624f91a7b7',
+    appId: '1:283704459158:web:0231a230ec2999a091a7b7',
     messagingSenderId: '283704459158',
     projectId: 'test-7fe47',
     authDomain: 'test-7fe47.firebaseapp.com',
     storageBucket: 'test-7fe47.appspot.com',
-    measurementId: 'G-XHVHS911WZ',
+    measurementId: 'G-B1H9NWRDT5',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -76,4 +76,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'test-7fe47.appspot.com',
     measurementId: 'G-5ENNC6HGD5',
   );
+
 }

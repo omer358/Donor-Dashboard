@@ -4,7 +4,7 @@ class AdminService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<List<Map<String, dynamic>>> getAllDonors() async {
-    var snapshot = await _firestore.collection('donors').get();
+    var snapshot = await _firestore.collection('users').get();
     return snapshot.docs.map((doc) => doc.data()).toList();
   }
 

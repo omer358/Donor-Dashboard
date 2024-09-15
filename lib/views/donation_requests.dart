@@ -13,7 +13,7 @@ class DonationRequests extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Blood Donation Requests'),
+        title: const Text('طلبات الدم'),
       ),
       body: Obx(() {
         if (controller.donationRequests.isEmpty) {

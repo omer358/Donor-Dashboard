@@ -20,7 +20,7 @@ class _BloodRequestState extends State<BloodRequest> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Blood Donation Request'),
+        title: const Text('إضافة طلب دم'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

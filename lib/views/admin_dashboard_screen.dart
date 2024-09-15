@@ -41,15 +41,15 @@ class _AdminDashboardScreenState extends State<AdminDashboardScreen> {
               destinations: const [
                 NavigationRailDestination(
                   icon: Icon(Icons.add),
-                  label: Text('Add Donation'),
+                  label: Text('طلب دم'),
                 ),
                 NavigationRailDestination(
                   icon: Icon(Icons.bloodtype_rounded),
-                  label: Text('Donation Requests'),
+                  label: Text('طلبات الدم'),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.list),
-                  label: Text('Donors List'),
+                  icon: Icon(Icons.people),
+                  label: Text('المتبرعين'),
                 ),
 
               ],

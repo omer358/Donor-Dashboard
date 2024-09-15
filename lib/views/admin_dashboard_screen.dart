@@ -1,13 +1,16 @@
-import 'package:blood_donor_dashboard/views/donation.dart';
+import 'package:blood_donor_dashboard/views/blood_request.dart';
+import 'package:blood_donor_dashboard/views/donation_requests.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/admin_controller.dart';
+import '../controllers/donation_request_controller.dart';
 import 'donor_list_screen.dart';
 
 class AdminDashboardScreen extends StatelessWidget {
   final AdminController adminController = Get.put(AdminController());
+  final DonationRequestsController donationRequests = Get.put(DonationRequestsController());
 
-   AdminDashboardScreen({super.key});
+  AdminDashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,20 +30,27 @@ class AdminDashboardScreen extends StatelessWidget {
                   label: Text('Add Donation'),
                 ),
                 NavigationRailDestination(
+                  icon: Icon(Icons.bloodtype_rounded),
+                  label: Text('Donation Requests'),
+                ),
+                NavigationRailDestination(
                   icon: Icon(Icons.list),
                   label: Text('Donors List'),
                 ),
+
               ],
             ),
             Expanded(
               child: Obx(() {
                 switch (adminController.selectedPage.value) {
                   case 0:
-                    return  AddDonationScreen();
+                    return BloodRequest();
                   case 1:
+                    return DonationRequests();
+                  case 2:
                     return DonorListScreen();
                   default:
-                    return  DonorListScreen();
+                    return DonorListScreen();
                 }
               }),
             ),

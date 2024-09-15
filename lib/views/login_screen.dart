@@ -21,82 +21,91 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Placeholder for an illustration (e.g., logo or image)
-                Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(75),
-                  ),
-                  child: Icon(Icons.person, size: 100, color: Colors.grey[400]),
-                ),
-                const SizedBox(height: 30),
-                // Welcome Text
-                Text(
-                  "مرحبًا بعودتك!",
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  "يرجى تسجيل الدخول للمتابعة",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                  ),
-                ),
-                const SizedBox(height: 30),
-                // Username TextField
-                _buildTextField(
-                  controller: usernameController,
-                  labelText: 'اسم المستخدم',
-                  icon: Icons.person,
-                  keyboardType: TextInputType.text,
-                ),
-                const SizedBox(height: 20),
-                // Password TextField with visibility toggle
-                _buildTextField(
-                  controller: passwordController,
-                  labelText: 'كلمة المرور',
-                  icon: Icons.lock,
-                  obscureText: !_passwordVisible,
-                  isPassword: true, // Indicate that this is a password field
-                ),
-                const SizedBox(height: 20),
-                // Login Button
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      authController.signIn(
-                        usernameController.text.trim(),
-                        passwordController.text.trim(),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+          child: Obx(() {
+            return authController.isLoading.value
+                ? const CircularProgressIndicator()
+                : SingleChildScrollView(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Placeholder for an illustration (e.g., logo or image)
+                        Container(
+                          height: 150,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(75),
+                          ),
+                          child: Icon(Icons.person,
+                              size: 100, color: Colors.grey[400]),
+                        ),
+                        const SizedBox(height: 30),
+                        // Welcome Text
+                        Text(
+                          "مرحبًا بعودتك!",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          "يرجى تسجيل الدخول للمتابعة",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        // Username TextField
+                        _buildTextField(
+                          controller: usernameController,
+                          labelText: 'اسم المستخدم',
+                          icon: Icons.person,
+                          keyboardType: TextInputType.text,
+                        ),
+                        const SizedBox(height: 20),
+                        // Password TextField with visibility toggle
+                        _buildTextField(
+                          controller: passwordController,
+                          labelText: 'كلمة المرور',
+                          icon: Icons.lock,
+                          obscureText: !_passwordVisible,
+                          isPassword:
+                              true, // Indicate that this is a password field
+                        ),
+                        const SizedBox(height: 20),
+                        // Login Button
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              authController.signIn(
+                                usernameController.text.trim(),
+                                passwordController.text.trim(),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                            ),
+                            child: const Text(
+                              'تسجيل الدخول',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        // Additional Options Row (e.g., Forgot Password, Sign Up)
+                      ],
                     ),
-                    child: const Text(
-                      'تسجيل الدخول',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                // Additional Options Row (e.g., Forgot Password, Sign Up)
-              ],
-            ),
-          ),
+                  );
+          }),
         ),
       ),
     );

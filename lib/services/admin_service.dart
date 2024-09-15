@@ -27,4 +27,9 @@ class AdminService {
   Future<void> updateDonationRequest(String id, bool active) async {
     await _firestore.collection('donationRequests').doc(id).update({'active': active});
   }
+
+  Future<void> deleteDonationRequest(String id) async {
+    await _firestore.collection('donationRequests').doc(id).delete();
+  }
+
 }

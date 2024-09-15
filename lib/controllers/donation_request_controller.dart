@@ -23,6 +23,16 @@ class DonationRequestsController extends GetxController {
       print("Error updating request status: $e");
     }
   }
+
+
+  Future<void> deleteRequest(String id) async {
+    try {
+      await _firestoreService.deleteDonationRequest(id);
+    } catch (e) {
+      print("Error deleting request: $e");
+    }
+  }
+
   @override
   void onInit() {
     fetchDonationRequests();

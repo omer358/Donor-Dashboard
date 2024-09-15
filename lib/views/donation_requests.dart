@@ -27,21 +27,44 @@ class DonationRequests extends StatelessWidget {
           itemBuilder: (context, index) {
             final request = controller.donationRequests[index];
             final id = request['id']; // You need to store the document ID
-            return ListTile(
-              title: Text(request['location']),
-              subtitle: Text(request['bloodType']),
-              trailing: Switch(
-                value: request['active'],
-                onChanged: (value) {
-                  log("onChange has been trigered with $value");
-                  log("the id is :$id");
-                  controller.updateRequestStatus(id, value);
-                },
+            return Dismissible(
+              key: Key(id), // Use the document ID as the key
+              direction: DismissDirection.endToStart,
+              onDismissed: (direction) {
+                log("onDismissed triggered for ID: $id");
+                controller.deleteRequest(id); // Call the delete method
+                // Show a snackbar or any other feedback mechanism
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('تم مسح طلب الدم')),
+                );
+              },
+              background: Container(
+                color: Colors.red,
+                child: const Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Icon(Icons.delete, color: Colors.white),
+                  ),
+                ),
+              ),
+              child: ListTile(
+                title: Text(request['location']),
+                subtitle: Text(request['bloodType']),
+                trailing: Switch(
+                  value: request['active'],
+                  onChanged: (value) {
+                    log("onChange has been triggered with $value");
+                    log("The ID is: $id");
+                    controller.updateRequestStatus(id, value);
+                  },
+                ),
               ),
             );
-          }, separatorBuilder: (BuildContext context, int index) {
+          },
+          separatorBuilder: (BuildContext context, int index) {
             return const Divider();
-        },
+          },
         );
       }),
     );

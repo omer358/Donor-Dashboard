@@ -22,14 +22,14 @@ class DonationRequests extends StatelessWidget {
           );
         }
 
-        return ListView.builder(
+        return ListView.separated(
           itemCount: controller.donationRequests.length,
           itemBuilder: (context, index) {
             final request = controller.donationRequests[index];
             final id = request['id']; // You need to store the document ID
             return ListTile(
-              title: Text(request['bloodType']),
-              subtitle: Text(request['location']),
+              title: Text(request['location']),
+              subtitle: Text(request['bloodType']),
               trailing: Switch(
                 value: request['active'],
                 onChanged: (value) {
@@ -39,7 +39,9 @@ class DonationRequests extends StatelessWidget {
                 },
               ),
             );
-          },
+          }, separatorBuilder: (BuildContext context, int index) {
+            return const Divider();
+        },
         );
       }),
     );

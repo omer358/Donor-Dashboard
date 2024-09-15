@@ -11,10 +11,15 @@ class DonationController extends GetxController {
     fetchDonors();
   }
 
-  void fetchDonors() async {
-    isLoading.value = true;
-    donors.value = await AdminService().getAllDonors();
-    isLoading.value = false;
+  void fetchDonors(){
+    // Use a Stream to listen to changes in the donors collection
+    AdminService().getAllDonors().listen((donorList) {
+      donors.value = donorList;
+      isLoading.value = false;
+    }).onError((error) {
+      print("Error fetching donors: $error");
+      isLoading.value = false; // Stop loading if there's an error
+    });
   }
 
   void addDonation(Map<String, dynamic> donationData) {

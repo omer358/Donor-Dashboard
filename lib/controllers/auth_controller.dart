@@ -6,9 +6,9 @@ class AuthController extends GetxController {
   AuthService _authService = AuthService();
 
   // Sign in method
-  Future<void> signIn(String email, String password) async {
+  Future<void> signIn(String username, String password) async {
     isLoading.value = true;
-    var user = await _authService.signIn(email, password);
+    var user = await _authService.signIn(username, password);
     isLoading.value = false;
 
     if (user != null) {

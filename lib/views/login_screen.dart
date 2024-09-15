@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import '../controllers/auth_controller.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -92,41 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 10),
                 // Additional Options Row (e.g., Forgot Password, Sign Up)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        // Navigate to "Forgot Password" screen
-                      },
-                      child: const Text(
-                        "نسيت كلمة المرور؟",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      "|",
-                      style: TextStyle(color: Colors.grey[400]),
-                    ),
-                    const SizedBox(width: 5),
-                    TextButton(
-                      onPressed: () {
-                        // Navigate to "Sign Up" screen
-                      },
-                      child: const Text(
-                        "إنشاء حساب",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.blue,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ),

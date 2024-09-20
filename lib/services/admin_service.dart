@@ -15,6 +15,19 @@ class AdminService {
   }
 
   Future<void> addDonation(Map<String, dynamic> donationData) async {
+    if (donationData.containsKey('latitude') && donationData.containsKey('longitude')) {
+      double latitude = donationData['latitude'];
+      double longitude = donationData['longitude'];
+
+      // Convert latitude and longitude to GeoPoint
+      donationData['map'] = GeoPoint(latitude, longitude);
+
+
+      // Remove the raw latitude and longitude fields since they are now combined into GeoPoint
+      donationData.remove('latitude');
+      donationData.remove('longitude');
+    }
+
     await _firestore.collection('donationRequests').add(donationData);
   }
 

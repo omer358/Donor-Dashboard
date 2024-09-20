@@ -13,6 +13,8 @@ class BloodRequest extends StatefulWidget {
 class _BloodRequestState extends State<BloodRequest> {
   final DonationController donationController = Get.put(DonationController());
   final TextEditingController locationController = TextEditingController();
+  final TextEditingController latitudeController = TextEditingController(); // New Controller for Latitude
+  final TextEditingController longitudeController = TextEditingController(); // New Controller for Longitude
 
   BloodType? selectedBloodType; // Store the selected blood type
 
@@ -62,6 +64,30 @@ class _BloodRequestState extends State<BloodRequest> {
                   ),
                 ),
               ),
+              const SizedBox(height: 16),
+              // Latitude Input Field
+              TextField(
+                controller: latitudeController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'خط العرض (Latitude)',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Longitude Input Field
+              TextField(
+                controller: longitudeController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'خط الطول (Longitude)',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
               const SizedBox(height: 24),
               // Add Donation Button
               SizedBox(
@@ -69,18 +95,32 @@ class _BloodRequestState extends State<BloodRequest> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (selectedBloodType != null &&
-                        locationController.text.isNotEmpty) {
-                      donationController.addDonation({
-                        'bloodType': selectedBloodType!.displayName,
-                        'location': locationController.text.trim(),
-                        'createdAt': DateTime.now(),
-                        'active': true,
-                      });
-                      Get.snackbar(
-                          'تم', 'تمت إضافة طلب الدم بنجاح!',
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.green,
-                          colorText: Colors.white);
+                        locationController.text.isNotEmpty &&
+                        latitudeController.text.isNotEmpty &&
+                        longitudeController.text.isNotEmpty) {
+                      // Parse latitude and longitude
+                      final double? latitude = double.tryParse(latitudeController.text.trim());
+                      final double? longitude = double.tryParse(longitudeController.text.trim());
+
+                      if (latitude != null && longitude != null) {
+                        donationController.addDonation({
+                          'bloodType': selectedBloodType!.displayName,
+                          'location': locationController.text.trim(),
+                          'latitude': latitude,
+                          'longitude': longitude,
+                          'createdAt': DateTime.now(),
+                          'active': true,
+                        });
+                        Get.snackbar('تم', 'تمت إضافة طلب الدم بنجاح!',
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white);
+                      } else {
+                        Get.snackbar('خطأ', 'خط العرض/الطول غير صحيح',
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white);
+                      }
                     } else {
                       Get.snackbar('خطأ', 'الرجاء ملء كل الحقول',
                           snackPosition: SnackPosition.BOTTOM,
@@ -95,7 +135,7 @@ class _BloodRequestState extends State<BloodRequest> {
                     ),
                   ),
                   child:
-                      const Text('إضافة الطلب', style: TextStyle(fontSize: 18)),
+                  const Text('إضافة الطلب', style: TextStyle(fontSize: 18)),
                 ),
               ),
             ],

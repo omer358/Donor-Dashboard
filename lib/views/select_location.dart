@@ -19,7 +19,7 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
       ),
       body: GoogleMap(
         initialCameraPosition: const CameraPosition(
-          target: LatLng(24.7136, 46.6753), // Default to Riyadh
+          target: LatLng(15.476275554395144,36.39543816166238),
           zoom: 10,
         ),
         onTap: (LatLng location) {

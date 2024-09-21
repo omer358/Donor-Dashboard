@@ -1,7 +1,9 @@
+import 'package:blood_donor_dashboard/views/select_location.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart'; // Add this import
 import '../controllers/donation_controller.dart';
-import '../models/blood_type.dart'; // Assuming you moved the enum to its own file
+import '../models/blood_type.dart';
 
 class BloodRequest extends StatefulWidget {
   const BloodRequest({super.key});
@@ -13,10 +15,10 @@ class BloodRequest extends StatefulWidget {
 class _BloodRequestState extends State<BloodRequest> {
   final DonationController donationController = Get.put(DonationController());
   final TextEditingController locationController = TextEditingController();
-  final TextEditingController latitudeController = TextEditingController(); // New Controller for Latitude
-  final TextEditingController longitudeController = TextEditingController(); // New Controller for Longitude
+  final TextEditingController latitudeController = TextEditingController();
+  final TextEditingController longitudeController = TextEditingController();
 
-  BloodType? selectedBloodType; // Store the selected blood type
+  BloodType? selectedBloodType;
 
   @override
   Widget build(BuildContext context) {
@@ -65,16 +67,19 @@ class _BloodRequestState extends State<BloodRequest> {
                 ),
               ),
               const SizedBox(height: 16),
-              // Latitude Input Field
-              TextField(
-                controller: latitudeController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: 'خط العرض (Latitude)',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
+              // Button to Select Location via Map
+              ElevatedButton(
+                onPressed: () async {
+                  // Navigate to the SelectLocationScreen and wait for the result
+                  final LatLng? selectedLocation = await Get.to(() => SelectLocationScreen());
+
+                  if (selectedLocation != null) {
+                    // Update latitude and longitude fields automatically
+                    latitudeController.text = selectedLocation.latitude.toString();
+                    longitudeController.text = selectedLocation.longitude.toString();
+                  }
+                },
+                child: const Text('اختر موقع المستشفى على الخريطة'),
               ),
               const SizedBox(height: 16),
               // Longitude Input Field
@@ -83,6 +88,18 @@ class _BloodRequestState extends State<BloodRequest> {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   labelText: 'خط الطول (Longitude)',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Latitude Input Field
+              TextField(
+                controller: latitudeController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  labelText: 'خط العرض (Latitude)',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -99,8 +116,10 @@ class _BloodRequestState extends State<BloodRequest> {
                         latitudeController.text.isNotEmpty &&
                         longitudeController.text.isNotEmpty) {
                       // Parse latitude and longitude
-                      final double? latitude = double.tryParse(latitudeController.text.trim());
-                      final double? longitude = double.tryParse(longitudeController.text.trim());
+                      final double? latitude =
+                      double.tryParse(latitudeController.text.trim());
+                      final double? longitude =
+                      double.tryParse(longitudeController.text.trim());
 
                       if (latitude != null && longitude != null) {
                         donationController.addDonation({

@@ -60,7 +60,7 @@ class _BloodRequestState extends State<BloodRequest> {
               TextField(
                 controller: locationController,
                 decoration: InputDecoration(
-                  labelText: 'الموقع',
+                  labelText: 'إسم المستشفى',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
